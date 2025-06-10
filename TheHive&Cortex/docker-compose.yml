@@ -161,7 +161,7 @@ services:
         limits:
           memory: 2.5G
           cpus: '2.000'
-    memswap_limit: 2.G
+    memswap_limit: 2.5G
     networks:
       - thehive-cortex-network
     ports:
