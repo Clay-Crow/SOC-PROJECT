@@ -10,10 +10,10 @@ services:
       - CASSANDRA_CLUSTER_NAME=TheHive
       - CASSANDRA_AUTHENTICATOR=PasswordAuthenticator
       - CASSANDRA_NUM_TOKENS=4
-      - HEAP_NEWSIZE=1280M
+      - HEAP_NEWSIZE=512M
       # https://docs.datastax.com/en/cassandra-oss/3.0/cassandra/operations/opsTuneJVM.html
       # ¼ of MAX_HEAP_SIZE or 100 times the number of cores
-      - MAX_HEAP_SIZE=3G
+      - MAX_HEAP_SIZE=1G
       # max(min(1/2 ram, 1024MB), min(1/4 ram, 8GB)
     volumes:
       - ./cassandra/data:/var/lib/cassandra
@@ -21,10 +21,10 @@ services:
     deploy:
       resources:
         limits:
-          memory: 4G
-          cpus: '3.000'
+          memory: 2G
+          cpus: '1.500'
     # Prevent swap https://docs.docker.com/engine/containers/resource_constraints/#prevent-a-container-from-using-swap
-    memswap_limit: 4G
+    memswap_limit: 2G
     networks:
       - thehive-cortex-network
     healthcheck:
@@ -56,7 +56,7 @@ services:
       - thread_pool.write.queue_size=100000
       - bootstrap.memory_lock=true
       - xpack.security.enabled=false
-      - ES_JAVA_OPTS=-Xms6G -Xmx6G
+      - ES_JAVA_OPTS=-Xms2G -Xmx2G
     volumes:
       - ./elasticsearch/data:/usr/share/elasticsearch/data
       - ./elasticsearch/logs:/usr/share/elasticsearch/logs
@@ -67,9 +67,9 @@ services:
     deploy:
       resources:
         limits:
-          memory: 7G
-          cpus: '4.000'
-    memswap_limit: 7G
+          memory: 3G
+          cpus: '2.000'
+    memswap_limit: 3G
     networks:
       - thehive-cortex-network
     healthcheck:
@@ -96,8 +96,8 @@ services:
     environment:
       - |
         JAVA_OPTS=
-          -Xms3000M
-          -Xmx3000M
+          -Xms1500M
+          -Xmx1500M
           -XX:MaxMetaspaceSize=400m
           -XX:ReservedCodeCacheSize=400m
     volumes:
@@ -107,9 +107,9 @@ services:
     deploy:
       resources:
         limits:
-          memory: 4G
-          cpus: '4.000'
-    memswap_limit: 4G
+          memory: 2G
+          cpus: '2.000'
+    memswap_limit: 2G
     networks:
       - thehive-cortex-network
     ports:
@@ -141,8 +141,8 @@ services:
     environment:
       - |
         JAVA_OPTS=
-          -Xms4000M
-          -Xmx4000M
+          -Xms2000M
+          -Xmx2000M
           -XX:MaxMetaspaceSize=400m
           -XX:ReservedCodeCacheSize=250m
       - es_uri=http://elasticsearch:9200
@@ -159,9 +159,9 @@ services:
     deploy:
       resources:
         limits:
-          memory: 5G
-          cpus: '4.000'
-    memswap_limit: 5G
+          memory: 2.5G
+          cpus: '2.000'
+    memswap_limit: 2.G
     networks:
       - thehive-cortex-network
     ports:
